@@ -39,7 +39,7 @@ Here is an overview of the codebase files:
 | **`content.js`** / **`content.css`** | Scripts injected into the target tab to display the interactive webcam bubble widget and screen controller bar overlay (Pause/Resume/Stop/Mute). |
 | **`camera.html`** / **`camera.js`** / **`camera.css`** | Web-accessible iframe content used to safely render the live webcam stream within the in-page camera overlay bubble. |
 | **`dashboard.html`** / **`dashboard.js`** / **`dashboard.css`** | The heart of the application: controls the media capture engine, records browser streams via `MediaRecorder` with WebM codecs, manages the IndexedDB database (`AuraCastDB`), and renders the local video library. |
-| **`install.html`** | A user-friendly onboarding page detailing instructions on how to download the `.zip` archive package and load the extension unpacked. |
+| **`index.html`** | A user-friendly onboarding page detailing instructions on how to download the `.zip` archive package and load the extension unpacked. |
 | **`icons/`** | Contains visual brand icons and assets used for Chrome Web Store branding, extension menus, and UI components. |
 
 ---
