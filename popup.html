@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigitalGyan Broadcast - Screen & Cam Recorder</title>
+  <link rel="stylesheet" href="popup.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="popup-container" id="popupContainer">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-area">
+        <img src="icons/icon.png" width="32" height="32" style="border-radius:8px;object-fit:cover;" alt="DigitalGyan Logo">
+        <h1 class="logo-text">DigitalGyan</h1>
+      </div>
+      <div class="status-indicator idle" id="statusIndicator">
+        <span class="status-dot"></span>
+        <span class="status-label" id="statusLabel">Ready</span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Recording Modes Grid -->
+      <section class="section">
+        <h2 class="section-title">Recording Mode</h2>
+        <div class="mode-grid">
+          <!-- Screen + Camera -->
+          <div class="mode-card active" id="modeScreenCam" data-mode="screencam" role="button" tabindex="0">
+            <div class="card-icon">
+              <!-- Combined Screen + Cam Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="13" rx="2" />
+                <path d="M12 16v4M8 20h8" />
+                <circle cx="17" cy="11" r="3" fill="currentColor" fill-opacity="0.2" />
+              </svg>
+            </div>
+            <span class="card-title">Screen + Cam</span>
+          </div>
+
+          <!-- Screen Only -->
+          <div class="mode-card" id="modeScreenOnly" data-mode="screen" role="button" tabindex="0">
+            <div class="card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M8 21h8M12 17v4" />
+              </svg>
+            </div>
+            <span class="card-title">Screen Only</span>
+          </div>
+
+          <!-- Camera Only -->
+          <div class="mode-card" id="modeCamOnly" data-mode="camera" role="button" tabindex="0">
+            <div class="card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 7l-7 5 7 5V7z" />
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+              </svg>
+            </div>
+            <span class="card-title">Cam Only</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Media Device Selectors -->
+      <section class="section settings-section">
+        <h2 class="section-title">Input Settings</h2>
+        
+        <!-- Camera Select -->
+        <div class="setting-item" id="camSelectWrapper">
+          <label class="setting-label" for="cameraSelect">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 7l-7 5 7 5V7z" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+            </svg>
+            <span>Camera</span>
+          </label>
+          <div class="select-wrapper">
+            <select class="custom-select" id="cameraSelect">
+              <option value="default">Loading cameras...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Microphone Select -->
+        <div class="setting-item" id="micSelectWrapper">
+          <label class="setting-label" for="micSelect">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+              <path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v4M8 23h8" />
+            </svg>
+            <span>Microphone</span>
+          </label>
+          <div class="select-wrapper">
+            <select class="custom-select" id="micSelect">
+              <option value="default">Loading microphones...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Options Toggles -->
+        <div class="setting-toggle-list">
+          <!-- System Audio Switch -->
+          <div class="setting-toggle-item" id="systemAudioToggleWrapper">
+            <div class="toggle-info">
+              <span class="toggle-name">Record System Audio</span>
+              <span class="toggle-desc">Capture browser & desktop sounds</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="systemAudioToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- Webcam Overlay Style Switch -->
+          <div class="setting-toggle-item" id="camStyleToggleWrapper">
+            <div class="toggle-info">
+              <span class="toggle-name">Webcam Bubble Type</span>
+              <span class="toggle-desc">In-page Bubble vs. Desktop PiP</span>
+            </div>
+            <div class="overlay-type-selector" id="overlayTypeSelector">
+              <button class="type-btn active" id="typeBubble" data-value="bubble">Bubble</button>
+              <button class="type-btn" id="typePip" data-value="pip">Desktop PiP</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recording Panel (Active Only) -->
+      <section class="recording-panel hidden" id="recordingPanel">
+        <div class="timer-display" id="timerDisplay">00:00</div>
+        <div class="recording-controls">
+          <button class="control-btn pause-btn" id="btnPause" title="Pause Recording">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <rect x="6" y="4" width="4" height="16" />
+              <rect x="14" y="4" width="4" height="16" />
+            </svg>
+          </button>
+          <button class="control-btn resume-btn hidden" id="btnResume" title="Resume Recording">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5,3 19,12 5,21" />
+            </svg>
+          </button>
+          <button class="control-btn stop-btn" id="btnStop" title="Stop & Save Recording">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="4" y="4" width="16" height="16" rx="2" />
+            </svg>
+          </button>
+        </div>
+      </section>
+      
+      <!-- Action Buttons -->
+      <div class="actions-area" id="idleActions">
+        <button class="btn btn-primary start-record-btn" id="btnStartRecord">
+          <span class="btn-ripple"></span>
+          <span class="btn-text">Start Recording</span>
+        </button>
+        
+        <!-- Toggle Camera Overlay Preview Button -->
+        <button class="btn btn-secondary toggle-preview-btn" id="btnToggleCamBubble">
+          <span>Toggle Floating Webcam</span>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <button class="footer-link-btn" id="btnOpenDashboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5v-15z" />
+        </svg>
+        <span>My Video Library</span>
+      </button>
+      <span class="version-text">Broadcast v1.0</span>
+    </footer>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

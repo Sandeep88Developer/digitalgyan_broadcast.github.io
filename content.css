@@ -1,0 +1,209 @@
+/* AuraCast Injected Stylesheet - Scoped to prevent host website conflicts */
+
+#auracast-widget-root {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  user-select: none !important;
+  pointer-events: auto !important;
+  transition: transform 0.1s ease !important;
+}
+
+/* Cam Bubble Styling */
+#auracast-cam-bubble {
+  position: relative !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  border: 3px solid rgba(99, 102, 241, 0.6) !important;
+  background: #000000 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.2) !important;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
+  cursor: grab !important;
+}
+
+#auracast-cam-bubble:active {
+  cursor: grabbing !important;
+}
+
+#auracast-cam-iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  display: block !important;
+  pointer-events: auto !important;
+}
+
+/* Transparent overlay to capture drag events on top of the iframe */
+.auracast-drag-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 5 !important;
+  background: transparent !important;
+  cursor: grab !important;
+}
+
+.auracast-drag-overlay:active {
+  cursor: grabbing !important;
+}
+
+/* Prevent iframe from eating mouse events during dragging */
+#auracast-widget-root.auracast-dragging #auracast-cam-iframe {
+  pointer-events: none !important;
+}
+
+#auracast-widget-root.auracast-dragging #auracast-cam-bubble {
+  border-color: rgba(99, 102, 241, 0.9) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.4) !important;
+  transform: scale(1.02) !important;
+}
+
+/* Sizing presets */
+#auracast-widget-root.auracast-size-small #auracast-cam-bubble {
+  width: 110px !important;
+  height: 110px !important;
+}
+
+#auracast-widget-root.auracast-size-medium #auracast-cam-bubble {
+  width: 170px !important;
+  height: 170px !important;
+}
+
+#auracast-widget-root.auracast-size-large #auracast-cam-bubble {
+  width: 240px !important;
+  height: 240px !important;
+}
+
+/* Hide bubble if collapsed/cam off */
+#auracast-cam-bubble.auracast-collapsed {
+  display: none !important;
+}
+
+/* Glassmorphic Control Bar */
+#auracast-control-bar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(15, 12, 35, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 9999px !important;
+  padding: 6px 12px !important;
+  backdrop-filter: blur(16px) saturate(140%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+#auracast-widget-root.auracast-recording-active #auracast-cam-bubble {
+  border-color: #ef4444 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(239, 68, 68, 0.3) !important;
+}
+
+#auracast-widget-root.auracast-recording-paused #auracast-cam-bubble {
+  border-color: #eab308 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(234, 179, 8, 0.3) !important;
+}
+
+/* Control Elements */
+.auracast-control-timer {
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  margin-right: 6px !important;
+  font-family: 'Outfit', monospace !important;
+  cursor: grab !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.auracast-control-timer::before {
+  content: '' !important;
+  display: inline-block !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: #ef4444 !important;
+  margin-right: 6px !important;
+  box-shadow: 0 0 6px #ef4444 !important;
+}
+
+#auracast-widget-root.auracast-recording-paused .auracast-control-timer::before {
+  background: #eab308 !important;
+  box-shadow: 0 0 6px #eab308 !important;
+}
+
+/* Buttons */
+.auracast-control-btn {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #d1d5db !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.auracast-control-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  transform: scale(1.05) !important;
+}
+
+.auracast-control-btn:active {
+  transform: scale(0.95) !important;
+}
+
+.auracast-btn-stop {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #ef4444 !important;
+}
+
+.auracast-btn-stop:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4) !important;
+}
+
+.auracast-btn-resume {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #10b981 !important;
+}
+
+.auracast-btn-resume:hover {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4) !important;
+}
+
+.auracast-btn-active {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #ef4444 !important;
+}
+
+/* Hide helper class */
+.auracast-hidden {
+  display: none !important;
+}
+
+/* PiP Mode - Hide the inside bubble */
+#auracast-widget-root.auracast-pip-active #auracast-cam-bubble {
+  display: none !important;
+}
+
+/* If camera is hidden inside the bubble */
+#auracast-widget-root.auracast-cam-hidden #auracast-cam-bubble {
+  display: none !important;
+}

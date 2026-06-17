@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigitalGyan Webcam Preview</title>
+  <link rel="stylesheet" href="camera.css">
+</head>
+<body>
+  <div class="video-container">
+    <video id="webcamVideo" autoplay playsinline muted></video>
+    
+    <!-- Placeholder overlay shown if camera is loading, disabled or unavailable -->
+    <div class="placeholder-overlay" id="placeholderOverlay">
+      <div class="avatar-fallback">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      </div>
+      <p class="placeholder-text" id="placeholderText">Camera is loading...</p>
+    </div>
+  </div>
+  <script src="camera.js"></script>
+</body>
+</html>
